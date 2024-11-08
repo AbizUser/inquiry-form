@@ -15,28 +15,16 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/lib/formSchema";
 import { Textarea } from "../ui/textarea";
+import { useMailForm } from "@/hooks/useMailForm";
 
 export default function MailForm() {
+ const {form, onSubmit} = useMailForm();
 
-  //ボタンがクリックされたときにonSubmitが発火する
-  function onSubmit(values: any) { 
-    console.log(values)
-  }
-
-  const form = useForm({resolver: zodResolver(formSchema),
-    defaultValues: {
-    username: "",
-    subject: "",
-    email: "",
-    content: "",
-  },
-});
   return (
     <Form {...form}>
       <form
-      onSubmit={()=>{
-        form.handleSubmit(onSubmit);
-        }} className="container flex-col gap-3">
+      onSubmit={form.handleSubmit(onSubmit)} 
+        className="container flex-col gap-3">
         <FormField
           control={form.control}
           name="username"
