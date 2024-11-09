@@ -1,5 +1,5 @@
 "use client"
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -17,12 +17,21 @@ import { formSchema } from "@/lib/formSchema";
 import { Textarea } from "../ui/textarea";
 import { useMailForm } from "@/hooks/useMailForm";
 import { ClipLoader } from "react-spinners";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function MailForm() {
  const {form, onSubmit} = useMailForm();
 
+ useEffect(() => {
+  if (form.formState.isSubmitSuccessful) {
+    toast.success("メール送信に成功しました。");
+  }
+ }, [form.formState.isSubmitSuccessful]);
+
   return (
     <Form {...form}>
+      <ToastContainer />
       <form
       onSubmit={form.handleSubmit(onSubmit)} 
         className="container flex-col gap-3">
