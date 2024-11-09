@@ -1,21 +1,18 @@
 "use client"
-import React, { useEffect } from "react";
+
 import {
   Form,
   FormControl,
   FormLabel,
   FormItem,
   FormField,
-  FormDescription,
   FormMessage
 } from "../ui/form";
+import React, { useEffect } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { formSchema } from "@/lib/formSchema";
 import { Textarea } from "../ui/textarea";
-import { useMailForm } from "@/hooks/useMailForm";
+import useMailForm from "@/hooks/useMailForm";
 import { ClipLoader } from "react-spinners";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -87,23 +84,23 @@ export default function MailForm() {
             </FormItem>
           )}
         />
-                <FormField
+        <FormField
           control={form.control}
           name="file"
-          render={({ field: { value, onChange, ...fieldProps} }) => (
+          render={({ field: { value, onChange, ...fieldProps } }) => (
             <FormItem>
-              <FormLabel>Attache File</FormLabel>
+              <FormLabel>Profile Picture</FormLabel>
               <FormControl>
                 <Input
-                accept="image/*"//画像ファイルのみ添付対象とする記述
-                type="file" 
-                placeholder="Subject"
-                onChange={(event) => { 
-                  onChange(event.target.files); //ファイルの変更を認識
-                }}
-                {...fieldProps} />
+                  type="file"
+                  {...fieldProps}
+                  accept="image/*"
+                  onChange={(event) => {
+                    onChange(event.target.files && event.target.files);
+                  }}
+                />
               </FormControl>
-              <FormMessage/>
+              <FormMessage />
             </FormItem>
           )}
         />

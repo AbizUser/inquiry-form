@@ -1,4 +1,3 @@
-import { POST } from "@/app/api/send/route";
 import { formSchema } from "@/lib/formSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCallback } from "react";
@@ -24,8 +23,9 @@ export const useMailForm = () => {
     formData.append("email", email);
     formData.append("subject", subject);
     formData.append("content", content);
-    formData.append("file", file[0]);
-
+    if (file) {
+      formData.append("file", file[0]);
+    }
     // const buffer = Buffer.from(await file.arrayBuffer());
 
     try {
@@ -43,3 +43,5 @@ export const useMailForm = () => {
   //カスタムフックは基本的にメモ化することが多いらしい。
   return { form, onSubmit };
 };
+
+export default useMailForm;
