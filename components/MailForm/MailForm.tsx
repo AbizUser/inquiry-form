@@ -88,6 +88,7 @@ export default function MailForm() {
           control={form.control}
           name="file"
           render={({ field: { value, onChange, ...fieldProps } }) => (
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
             <FormItem>
               <FormLabel>Profile Picture</FormLabel>
               <FormControl>
