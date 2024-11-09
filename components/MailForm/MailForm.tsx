@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { formSchema } from "@/lib/formSchema";
 import { Textarea } from "../ui/textarea";
 import { useMailForm } from "@/hooks/useMailForm";
+import { ClipLoader } from "react-spinners";
 
 export default function MailForm() {
  const {form, onSubmit} = useMailForm();
@@ -77,7 +78,30 @@ export default function MailForm() {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+                <FormField
+          control={form.control}
+          name="file"
+          render={({ field: { value, onChange, ...fieldProps} }) => (
+            <FormItem>
+              <FormLabel>Attache File</FormLabel>
+              <FormControl>
+                <Input
+                accept="image/*"//画像ファイルのみ添付対象とする記述
+                type="file" 
+                placeholder="Subject"
+                onChange={(event) => { 
+                  onChange(event.target.files); //ファイルの変更を認識
+                }}
+                {...fieldProps} />
+              </FormControl>
+              <FormMessage/>
+            </FormItem>
+          )}
+        />
+        <Button type="submit" disabled={form.formState.isSubmitting}>
+          {form.formState.isSubmitting ? <ClipLoader/>: "Submit"}
+          {/*送信中に表示をLoadingにする。 */}
+        </Button>
       </form>
     </Form>
   );
